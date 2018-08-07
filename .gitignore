@@ -1,0 +1,6 @@
+*.layout
+*.depend
+*.save
+*.cscope_file_list
+/bin/
+/obj/

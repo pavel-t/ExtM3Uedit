@@ -1,0 +1,4 @@
+[submodule "dep/wxWidgets"]
+	path = dep/wxWidgets
+	url = git://github.com/pavel-t/wxWidgets.git
+	ignore = untracked
