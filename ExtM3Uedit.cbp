@@ -126,6 +126,8 @@
 		<Unit filename="src/ExtM3UeditApp.h" />
 		<Unit filename="src/ExtM3UeditMain.cpp" />
 		<Unit filename="src/ExtM3UeditMain.h" />
+		<Unit filename="src/em_data.cpp" />
+		<Unit filename="src/em_data.h" />
 		<Unit filename="src/resource.rc">
 			<Option compilerVar="WINDRES" />
 		</Unit>
