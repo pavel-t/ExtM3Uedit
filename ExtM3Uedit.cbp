@@ -84,6 +84,31 @@
 					<Add directory="dep/wxWidgets/lib/gcc_lib-release" />
 				</Linker>
 			</Target>
+			<Target title="UnitTests">
+				<Option output="bin/Testing/UnitTests" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Testing/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Option projectLinkerOptionsRelation="2" />
+				<Option projectResourceIncludeDirsRelation="2" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add option="-DwxDEBUG_LEVEL=2" />
+					<Add directory="dep/wxWidgets/lib/gcc_lib-testing/mswu" />
+				</Compiler>
+				<ResourceCompiler>
+					<Add directory="dep/wxWidgets/lib/gcc_lib-testing/mswu" />
+				</ResourceCompiler>
+				<Linker>
+					<Add option="-s" />
+					<Add library="libwxmsw31u.a" />
+					<Add library="libwxpng.a" />
+					<Add library="libwxjpeg.a" />
+					<Add library="libwxtiff.a" />
+					<Add library="libwxzlib.a" />
+					<Add directory="dep/wxWidgets/lib/gcc_lib-testing" />
+				</Linker>
+			</Target>
 		</Build>
 		<Compiler>
 			<Add option="-pedantic" />
@@ -122,16 +147,48 @@
 			<Add library="libuxtheme.a" />
 			<Add library="liboleacc.a" />
 		</Linker>
-		<Unit filename="src/ExtM3UeditApp.cpp" />
-		<Unit filename="src/ExtM3UeditApp.h" />
-		<Unit filename="src/ExtM3UeditMain.cpp" />
-		<Unit filename="src/ExtM3UeditMain.h" />
+		<Unit filename="src/ExtM3UeditApp.cpp">
+			<Option target="Debug" />
+			<Option target="Testing" />
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="src/ExtM3UeditApp.h">
+			<Option target="Debug" />
+			<Option target="Testing" />
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="src/ExtM3UeditMain.cpp">
+			<Option target="Debug" />
+			<Option target="Testing" />
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="src/ExtM3UeditMain.h">
+			<Option target="Debug" />
+			<Option target="Testing" />
+			<Option target="Release" />
+		</Unit>
 		<Unit filename="src/em_data.cpp" />
 		<Unit filename="src/em_data.h" />
 		<Unit filename="src/resource.rc">
 			<Option compilerVar="WINDRES" />
+			<Option target="Debug" />
+			<Option target="Testing" />
+			<Option target="Release" />
 		</Unit>
-		<Unit filename="src/wxsmith/ExtM3Ueditframe.wxs" />
+		<Unit filename="src/wxsmith/ExtM3Ueditframe.wxs">
+			<Option target="Debug" />
+			<Option target="Testing" />
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="test/catch.hpp">
+			<Option target="UnitTests" />
+		</Unit>
+		<Unit filename="test/tests_data.cpp">
+			<Option target="UnitTests" />
+		</Unit>
+		<Unit filename="test/tests_main.cpp">
+			<Option target="UnitTests" />
+		</Unit>
 		<Extensions>
 			<code_completion />
 			<envvars />
