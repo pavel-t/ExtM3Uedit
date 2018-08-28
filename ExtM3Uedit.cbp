@@ -169,6 +169,8 @@
 		</Unit>
 		<Unit filename="src/em_data.cpp" />
 		<Unit filename="src/em_data.h" />
+		<Unit filename="src/em_file.cpp" />
+		<Unit filename="src/em_file.h" />
 		<Unit filename="src/resource.rc">
 			<Option compilerVar="WINDRES" />
 			<Option target="Debug" />
@@ -184,6 +186,9 @@
 			<Option target="UnitTests" />
 		</Unit>
 		<Unit filename="test/tests_data.cpp">
+			<Option target="UnitTests" />
+		</Unit>
+		<Unit filename="test/tests_file.cpp">
 			<Option target="UnitTests" />
 		</Unit>
 		<Unit filename="test/tests_main.cpp">
