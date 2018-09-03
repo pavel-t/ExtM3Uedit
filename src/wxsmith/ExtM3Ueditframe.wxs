@@ -6,10 +6,35 @@
 		<object class="wxMenuBar" variable="MenuBar" member="no">
 			<object class="wxMenu" variable="FileMenu" member="no">
 				<label>&amp;File</label>
+				<object class="wxMenuItem" name="idMenuNew" variable="NewMenuItem" member="no">
+					<label>New</label>
+					<accel>Ctrl+N</accel>
+					<help>Create a new empty playlist</help>
+					<bitmap stock_id="wxART_NEW" stock_client="wxART_MENU" />
+				</object>
+				<object class="wxMenuItem" name="idMenuOpen" variable="OpenMenuItem" member="no">
+					<label>Open...</label>
+					<accel>Ctrl+O</accel>
+					<help>Open an existing playlist file</help>
+					<bitmap stock_id="wxART_FILE_OPEN" stock_client="wxART_MENU" />
+				</object>
+				<object class="wxMenuItem" name="idMenuSave" variable="SaveMenuItem" member="no">
+					<label>Save</label>
+					<accel>Ctrl+S</accel>
+					<help>Save the playlist</help>
+					<bitmap stock_id="wxART_FILE_SAVE" stock_client="wxART_MENU" />
+				</object>
+				<object class="wxMenuItem" name="idMenuSaveAs" variable="SaveAsMenuItem" member="no">
+					<label>Save As...</label>
+					<accel>Ctrl+Alt+S</accel>
+					<help>Save the playlist under a different name</help>
+					<bitmap stock_id="wxART_FILE_SAVE_AS" stock_client="wxART_MENU" />
+				</object>
 				<object class="wxMenuItem" name="idMenuQuit" variable="QuitMenuItem" member="no">
 					<label>Quit</label>
-					<accel>Alt-F4</accel>
+					<accel>Alt+F4</accel>
 					<help>Quit the application</help>
+					<bitmap stock_id="wxART_QUIT" stock_client="wxART_MENU" />
 					<handler function="OnQuit" entry="EVT_MENU" />
 				</object>
 			</object>
@@ -19,6 +44,7 @@
 					<label>About</label>
 					<accel>F1</accel>
 					<help>Show info about this application</help>
+					<bitmap stock_id="wxART_INFORMATION" stock_client="wxART_MENU" />
 					<handler function="OnAbout" entry="EVT_MENU" />
 				</object>
 			</object>

@@ -31,6 +31,10 @@ private:
     //*)
 
     //(*Identifiers(ExtM3UeditFrame)
+    static const long idMenuNew;
+    static const long idMenuOpen;
+    static const long idMenuSave;
+    static const long idMenuSaveAs;
     static const long idMenuQuit;
     static const long idMenuAbout;
     static const long ID_STATUSBAR;
