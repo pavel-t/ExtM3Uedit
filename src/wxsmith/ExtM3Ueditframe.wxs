@@ -3,6 +3,61 @@
 	<object class="wxFrame" name="ExtM3UeditFrame">
 		<title>ExtM3Uedit</title>
 		<size>800,600</size>
+		<object class="wxPanel" name="ID_MAIN_PANEL" variable="MainPanel" member="yes">
+			<object class="wxBoxSizer" variable="BoxSizer1" member="no">
+				<object class="sizeritem">
+					<object class="wxBoxSizer" variable="BoxSizer2" member="no">
+						<orient>wxVERTICAL</orient>
+						<object class="sizeritem">
+							<object class="wxBitmapButton" name="ID_ADDENTRY_BITMAPBUTTON" variable="AddEntryButton" member="yes">
+								<bitmap stock_id="wxART_PLUS" stock_client="wxART_BUTTON" />
+								<handler function="OnAddEntryButtonClick" entry="EVT_BUTTON" />
+							</object>
+							<flag>wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
+							<border>5</border>
+							<option>1</option>
+						</object>
+						<object class="sizeritem">
+							<object class="wxBitmapButton" name="ID_ENTRYUP_BITMAPBUTTON" variable="EntryUpButton" member="yes">
+								<bitmap stock_id="wxART_GO_UP" stock_client="wxART_BUTTON" />
+								<handler function="OnEntryUpButtonClick" entry="EVT_BUTTON" />
+							</object>
+							<flag>wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
+							<border>5</border>
+							<option>1</option>
+						</object>
+						<object class="sizeritem">
+							<object class="wxBitmapButton" name="ID_ENTRYDOWN_BITMAPBUTTON" variable="EntryDownButton" member="yes">
+								<bitmap stock_id="wxART_GO_DOWN" stock_client="wxART_BUTTON" />
+								<handler function="OnEntryDownButtonClick" entry="EVT_BUTTON" />
+							</object>
+							<flag>wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
+							<border>5</border>
+							<option>1</option>
+						</object>
+						<object class="sizeritem">
+							<object class="wxBitmapButton" name="ID_REMOVEENTRY_BITMAPBUTTON" variable="RemoveEntryButton" member="yes">
+								<bitmap stock_id="wxART_DELETE" stock_client="wxART_BUTTON" />
+								<handler function="OnRemoveEntryButtonClick" entry="EVT_BUTTON" />
+							</object>
+							<flag>wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
+							<border>5</border>
+							<option>1</option>
+						</object>
+					</object>
+					<flag>wxTOP|wxBOTTOM|wxLEFT|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
+					<border>5</border>
+				</object>
+				<object class="sizeritem">
+					<object class="wxListView" name="ID_ENTRY_LISTVIEW" subclass="EMEntryListView" variable="EntryListView" member="yes">
+						<style>wxLC_REPORT|wxLC_SINGLE_SEL|wxLC_VIRTUAL</style>
+					</object>
+					<flag>wxALL|wxEXPAND</flag>
+					<border>5</border>
+					<option>1</option>
+				</object>
+			</object>
+		</object>
 		<object class="wxMenuBar" variable="MenuBar" member="no">
 			<object class="wxMenu" variable="FileMenu" member="no">
 				<label>&amp;File</label>
@@ -11,24 +66,28 @@
 					<accel>Ctrl+N</accel>
 					<help>Create a new empty playlist</help>
 					<bitmap stock_id="wxART_NEW" stock_client="wxART_MENU" />
+					<handler function="OnNewMenuItemSelected" entry="EVT_MENU" />
 				</object>
 				<object class="wxMenuItem" name="idMenuOpen" variable="OpenMenuItem" member="no">
 					<label>Open...</label>
 					<accel>Ctrl+O</accel>
 					<help>Open an existing playlist file</help>
 					<bitmap stock_id="wxART_FILE_OPEN" stock_client="wxART_MENU" />
+					<handler function="OnOpenMenuItemSelected" entry="EVT_MENU" />
 				</object>
 				<object class="wxMenuItem" name="idMenuSave" variable="SaveMenuItem" member="no">
 					<label>Save</label>
 					<accel>Ctrl+S</accel>
 					<help>Save the playlist</help>
 					<bitmap stock_id="wxART_FILE_SAVE" stock_client="wxART_MENU" />
+					<handler function="OnSaveMenuItemSelected" entry="EVT_MENU" />
 				</object>
 				<object class="wxMenuItem" name="idMenuSaveAs" variable="SaveAsMenuItem" member="no">
 					<label>Save As...</label>
 					<accel>Ctrl+Alt+S</accel>
 					<help>Save the playlist under a different name</help>
 					<bitmap stock_id="wxART_FILE_SAVE_AS" stock_client="wxART_MENU" />
+					<handler function="OnSaveAsMenuItemSelected" entry="EVT_MENU" />
 				</object>
 				<object class="wxMenuItem" name="idMenuQuit" variable="QuitMenuItem" member="no">
 					<label>Quit</label>

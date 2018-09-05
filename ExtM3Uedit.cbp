@@ -171,6 +171,16 @@
 		<Unit filename="src/em_data.h" />
 		<Unit filename="src/em_editor.cpp" />
 		<Unit filename="src/em_editor.h" />
+		<Unit filename="src/em_el_view.cpp">
+			<Option target="Debug" />
+			<Option target="Testing" />
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="src/em_el_view.h">
+			<Option target="Debug" />
+			<Option target="Testing" />
+			<Option target="Release" />
+		</Unit>
 		<Unit filename="src/em_file.cpp" />
 		<Unit filename="src/em_file.h" />
 		<Unit filename="src/resource.rc">
