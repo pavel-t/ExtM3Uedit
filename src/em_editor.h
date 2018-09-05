@@ -13,7 +13,7 @@
 #include "em_data.h"
 #include "em_file.h"
 
-using Index = std::size_t;  // Type for entry indexes
+using Index = long;  // Type for entry indexes
 
 enum class EMUpdateMode : unsigned char
 {
@@ -36,7 +36,7 @@ public:
     void addObserver(EMObserver* o) { m_observers.push_back(o); }
     void removeObserver(EMObserver* o)
         { m_observers.erase(std::find(m_observers.begin(), m_observers.end(), o)); }
-    void notify(EMUpdateMode t, Index begin = 0, Index end = 0) const;
+    void notify(EMUpdateMode t, Index begin = -1, Index end = -1) const;
 private:
     std::vector<EMObserver*> m_observers;
 };

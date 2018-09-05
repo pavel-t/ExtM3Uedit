@@ -11,6 +11,8 @@
 
 void EMObservable::notify(EMUpdateMode t, Index begin, Index end) const
 {
+    if(end == -1 && begin != -1)
+        end = begin + 1;
     for(auto& o : m_observers)
         o->notify(t, begin, end);
 }

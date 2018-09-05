@@ -66,23 +66,17 @@ void EMEntryListView::doInsert(Index begin, Index end)
     RefreshItems(begin, en-1);
     auto fi = GetFirstSelected();
     if(fi != -1 && Index(fi) >= begin)
-    {
-        if(end > begin)
-            Select(fi + end - begin);
-        else
-            Select(fi + 1);
-    }
+        Select(fi + end - begin);
 }
 
 void EMEntryListView::doUpdate(Index begin, Index end)
 {
-    RefreshItems(begin, (end>begin? end-1 : begin));
+    RefreshItems(begin, end);
 }
 
 void EMEntryListView::doDelete(Index begin, Index end)
 {
-    do
+    while(end > begin)
         DeleteItem(begin++);
-    while(end>begin);
 }
 
