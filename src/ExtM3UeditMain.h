@@ -11,6 +11,7 @@
 #define EXTM3UEDITMAIN_H
 
 //(*Headers(ExtM3UeditFrame)
+#include "em_par_view.h"
 #include <wx/bmpbuttn.h>
 #include <wx/frame.h>
 #include <wx/listctrl.h>
@@ -29,6 +30,7 @@ public:
     virtual ~ExtM3UeditFrame();
 
     void notify(EMUpdateMode t, Index begin, Index end) override;
+
 private:
 
     //(*Handlers(ExtM3UeditFrame)
@@ -43,6 +45,7 @@ private:
     void OnEntryDownButtonClick(wxCommandEvent& event);
     void OnRemoveEntryButtonClick(wxCommandEvent& event);
     void OnEntryListViewResize(wxSizeEvent& event);
+    void OnEntryListViewItemSelect(wxListEvent& event);
     //*)
 
     //(*Identifiers(ExtM3UeditFrame)
@@ -51,6 +54,7 @@ private:
     static const long ID_ENTRYDOWN_BITMAPBUTTON;
     static const long ID_REMOVEENTRY_BITMAPBUTTON;
     static const long ID_ENTRY_LISTVIEW;
+    static const long ID_PARAM_VIEW;
     static const long ID_MAIN_PANEL;
     static const long idMenuNew;
     static const long idMenuOpen;
@@ -63,6 +67,7 @@ private:
 
     //(*Declarations(ExtM3UeditFrame)
     EMEntryListView* EntryListView;
+    EMParametersView* ParametersView;
     wxBitmapButton* AddEntryButton;
     wxBitmapButton* EntryDownButton;
     wxBitmapButton* EntryUpButton;

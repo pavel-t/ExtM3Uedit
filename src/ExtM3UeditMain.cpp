@@ -27,6 +27,7 @@ const long ExtM3UeditFrame::ID_ENTRYUP_BITMAPBUTTON = wxNewId();
 const long ExtM3UeditFrame::ID_ENTRYDOWN_BITMAPBUTTON = wxNewId();
 const long ExtM3UeditFrame::ID_REMOVEENTRY_BITMAPBUTTON = wxNewId();
 const long ExtM3UeditFrame::ID_ENTRY_LISTVIEW = wxNewId();
+const long ExtM3UeditFrame::ID_PARAM_VIEW = wxNewId();
 const long ExtM3UeditFrame::ID_MAIN_PANEL = wxNewId();
 const long ExtM3UeditFrame::idMenuNew = wxNewId();
 const long ExtM3UeditFrame::idMenuOpen = wxNewId();
@@ -74,6 +75,8 @@ ExtM3UeditFrame::ExtM3UeditFrame(wxWindow* parent,wxWindowID id)
     BoxSizer1->Add(BoxSizer2, 0, wxTOP|wxBOTTOM|wxLEFT|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
     EntryListView = new EMEntryListView(MainPanel, ID_ENTRY_LISTVIEW, wxDefaultPosition, wxDefaultSize, wxLC_REPORT|wxLC_SINGLE_SEL|wxLC_VIRTUAL, wxDefaultValidator, _T("ID_ENTRY_LISTVIEW"));
     BoxSizer1->Add(EntryListView, 1, wxALL|wxEXPAND, 5);
+    ParametersView = new EMParametersView(MainPanel,ID_PARAM_VIEW,wxDefaultPosition,wxSize(280,590),0,_T("ID_PARAM_VIEW"));
+    BoxSizer1->Add(ParametersView, 0, wxALL|wxEXPAND|wxFIXED_MINSIZE, 5);
     MainPanel->SetSizer(BoxSizer1);
     BoxSizer1->Fit(MainPanel);
     BoxSizer1->SetSizeHints(MainPanel);
@@ -112,6 +115,7 @@ ExtM3UeditFrame::ExtM3UeditFrame(wxWindow* parent,wxWindowID id)
     Connect(ID_ENTRYUP_BITMAPBUTTON,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&ExtM3UeditFrame::OnEntryUpButtonClick);
     Connect(ID_ENTRYDOWN_BITMAPBUTTON,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&ExtM3UeditFrame::OnEntryDownButtonClick);
     Connect(ID_REMOVEENTRY_BITMAPBUTTON,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&ExtM3UeditFrame::OnRemoveEntryButtonClick);
+    Connect(ID_ENTRY_LISTVIEW,wxEVT_COMMAND_LIST_ITEM_SELECTED,(wxObjectEventFunction)&ExtM3UeditFrame::OnEntryListViewItemSelect);
     Connect(idMenuNew,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&ExtM3UeditFrame::OnNewMenuItemSelected);
     Connect(idMenuOpen,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&ExtM3UeditFrame::OnOpenMenuItemSelected);
     Connect(idMenuSave,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&ExtM3UeditFrame::OnSaveMenuItemSelected);
@@ -124,6 +128,7 @@ ExtM3UeditFrame::ExtM3UeditFrame(wxWindow* parent,wxWindowID id)
 
     m_editor.addObserver(this);
     EntryListView->initEditor(&m_editor);
+    ParametersView->initEditor(&m_editor);
     notify(EMUpdateMode::Info, 0, 0);
 }
 
@@ -218,4 +223,9 @@ void ExtM3UeditFrame::OnRemoveEntryButtonClick(wxCommandEvent& /*event*/)
     auto s = EntryListView->GetFirstSelected();
     if(s != -1)
         m_editor.removeEntry(s);
+}
+
+void ExtM3UeditFrame::OnEntryListViewItemSelect(wxListEvent& /*event*/)
+{
+    ParametersView->selectEntry(EntryListView->GetFirstSelected());
 }

@@ -183,6 +183,16 @@
 		</Unit>
 		<Unit filename="src/em_file.cpp" />
 		<Unit filename="src/em_file.h" />
+		<Unit filename="src/em_par_view.cpp">
+			<Option target="Debug" />
+			<Option target="Testing" />
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="src/em_par_view.h">
+			<Option target="Debug" />
+			<Option target="Testing" />
+			<Option target="Release" />
+		</Unit>
 		<Unit filename="src/resource.rc">
 			<Option compilerVar="WINDRES" />
 			<Option target="Debug" />
