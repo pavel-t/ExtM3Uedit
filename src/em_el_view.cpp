@@ -74,7 +74,7 @@ void EMEntryListView::doInsert(Index begin, Index end)
 
 void EMEntryListView::doUpdate(Index begin, Index end)
 {
-    RefreshItems(begin, end);
+    RefreshItems(begin, end-1);
 }
 
 void EMEntryListView::doDelete(Index begin, Index end)
