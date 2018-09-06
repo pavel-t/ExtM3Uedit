@@ -66,7 +66,10 @@ void EMEntryListView::doInsert(Index begin, Index end)
     RefreshItems(begin, en-1);
     auto fi = GetFirstSelected();
     if(fi != -1 && Index(fi) >= begin)
+    {
+        wxEventBlocker lock(this, wxEVT_COMMAND_LIST_ITEM_SELECTED);
         Select(fi + end - begin);
+    }
 }
 
 void EMEntryListView::doUpdate(Index begin, Index end)
