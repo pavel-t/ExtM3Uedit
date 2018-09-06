@@ -174,9 +174,12 @@ void ExtM3UeditFrame::OnOpenMenuItemSelected(wxCommandEvent& /*event*/)
         m_editor.openFile(d.GetPath());
 }
 
-void ExtM3UeditFrame::OnSaveMenuItemSelected(wxCommandEvent& /*event*/)
+void ExtM3UeditFrame::OnSaveMenuItemSelected(wxCommandEvent& event)
 {
-    m_editor.saveFile();
+    if(m_editor.isSaveable())
+        m_editor.saveFile();
+    else
+        OnSaveAsMenuItemSelected(event);
 }
 
 void ExtM3UeditFrame::OnSaveAsMenuItemSelected(wxCommandEvent& /*event*/)
