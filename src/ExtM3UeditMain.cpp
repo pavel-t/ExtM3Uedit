@@ -8,7 +8,7 @@
  **************************************************************/
 
 #include "ExtM3UeditMain.h"
-#include <wx/msgdlg.h>
+#include <wx/aboutdlg.h>
 #include <wx/filedlg.h>
 #include <wx/textdlg.h>
 #include <wx/wupdlock.h>
@@ -140,10 +140,12 @@ ExtM3UeditFrame::~ExtM3UeditFrame()
     //*)
 }
 
+inline wxString getAppVersion() { return "v0.1-dev"; }
+
 void ExtM3UeditFrame::notify(EMUpdateMode t, Index /*begin*/, Index /*end*/)
 {
     if(t == EMUpdateMode::Reset || t == EMUpdateMode::Info)
-        SetTitle(m_editor.getFileName() + " - ExtM3Uedit");
+        SetTitle(m_editor.getFileName() + " - " + wxTheApp->GetAppName() + ' ' + getAppVersion());
 }
 
 void ExtM3UeditFrame::OnQuit(wxCommandEvent& /*event*/)
@@ -153,7 +155,12 @@ void ExtM3UeditFrame::OnQuit(wxCommandEvent& /*event*/)
 
 void ExtM3UeditFrame::OnAbout(wxCommandEvent& /*event*/)
 {
-    wxMessageBox("ExtM3Uedit v0.1-dev", _("About"));
+    wxAboutDialogInfo a;
+    a.SetVersion(getAppVersion());
+    a.SetDescription("Extended M3U playlist editor");
+    a.SetCopyright("(C) 2018 Pavel Tyunin <pavel51tunin@gmail.com>");
+    a.SetIcon(wxIcon("aaaa", wxBITMAP_TYPE_ICO_RESOURCE, 64, 64));
+    wxAboutBox(a, this);
 }
 
 void ExtM3UeditFrame::OnEntryListViewResize(wxSizeEvent& event)

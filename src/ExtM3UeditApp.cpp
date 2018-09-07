@@ -18,6 +18,7 @@ IMPLEMENT_APP(ExtM3UeditApp)
 
 bool ExtM3UeditApp::OnInit()
 {
+    SetAppName("ExtM3Uedit");
     //(*AppInitialize
     bool wxsOK = true;
     wxInitAllImageHandlers();
