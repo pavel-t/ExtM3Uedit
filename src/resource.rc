@@ -1,3 +1,3 @@
-aaaa ICON "wx/msw/std.ico"
+aaaa ICON "src/ExtM3Uedit.ico"
 
 #include "wx/msw/wx.rc"

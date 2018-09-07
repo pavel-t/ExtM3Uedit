@@ -126,6 +126,8 @@ ExtM3UeditFrame::ExtM3UeditFrame(wxWindow* parent,wxWindowID id)
     EntryListView->Connect(wxEVT_SIZE,(wxObjectEventFunction)&ExtM3UeditFrame::OnEntryListViewResize,0,this);
     wxGCC_WARNING_RESTORE_CAST_FUNCTION_TYPE()
 
+    SetIcon(wxIcon("aaaa", wxBITMAP_TYPE_ICO_RESOURCE, 16, 16));
+
     m_editor.addObserver(this);
     EntryListView->initEditor(&m_editor);
     ParametersView->initEditor(&m_editor);
