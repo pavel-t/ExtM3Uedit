@@ -50,6 +50,7 @@ private:
     void OnRemoveAttrButtonClick(wxCommandEvent& event);
     void OnAttrUpButtonClick(wxCommandEvent& event);
     void OnAttrDownButtonClick(wxCommandEvent& event);
+    void OnNormalizeMenuItemSelected(wxCommandEvent& event);
     //*)
 
     //(*Identifiers(ExtM3UeditFrame)
@@ -69,6 +70,7 @@ private:
     static const long idMenuSave;
     static const long idMenuSaveAs;
     static const long idMenuQuit;
+    static const long idMenuNormalize;
     static const long idMenuAbout;
     static const long ID_STATUSBAR;
     //*)

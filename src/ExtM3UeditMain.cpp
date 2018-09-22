@@ -38,6 +38,7 @@ const long ExtM3UeditFrame::idMenuOpen = wxNewId();
 const long ExtM3UeditFrame::idMenuSave = wxNewId();
 const long ExtM3UeditFrame::idMenuSaveAs = wxNewId();
 const long ExtM3UeditFrame::idMenuQuit = wxNewId();
+const long ExtM3UeditFrame::idMenuNormalize = wxNewId();
 const long ExtM3UeditFrame::idMenuAbout = wxNewId();
 const long ExtM3UeditFrame::ID_STATUSBAR = wxNewId();
 //*)
@@ -56,9 +57,11 @@ ExtM3UeditFrame::ExtM3UeditFrame(wxWindow* parent,wxWindowID id)
     wxBoxSizer* BoxSizer3;
     wxMenu* FileMenu;
     wxMenu* HelpMenu;
+    wxMenu* ToolsMenu;
     wxMenuBar* MenuBar;
     wxMenuItem* AboutMenuItem;
     wxMenuItem* NewMenuItem;
+    wxMenuItem* NormalizeMenuItem;
     wxMenuItem* OpenMenuItem;
     wxMenuItem* QuitMenuItem;
     wxMenuItem* SaveAsMenuItem;
@@ -113,6 +116,10 @@ ExtM3UeditFrame::ExtM3UeditFrame(wxWindow* parent,wxWindowID id)
     QuitMenuItem->SetBitmap(wxArtProvider::GetBitmap(wxART_MAKE_ART_ID_FROM_STR(_T("wxART_QUIT")),wxART_MENU));
     FileMenu->Append(QuitMenuItem);
     MenuBar->Append(FileMenu, _("&File"));
+    ToolsMenu = new wxMenu();
+    NormalizeMenuItem = new wxMenuItem(ToolsMenu, idMenuNormalize, _("Normalize"), _("Convert playlist to match Extended M3U specification"), wxITEM_NORMAL);
+    ToolsMenu->Append(NormalizeMenuItem);
+    MenuBar->Append(ToolsMenu, _("Tools"));
     HelpMenu = new wxMenu();
     AboutMenuItem = new wxMenuItem(HelpMenu, idMenuAbout, _("About\tF1"), _("Show info about this application"), wxITEM_NORMAL);
     AboutMenuItem->SetBitmap(wxArtProvider::GetBitmap(wxART_MAKE_ART_ID_FROM_STR(_T("wxART_INFORMATION")),wxART_MENU));
@@ -140,6 +147,7 @@ ExtM3UeditFrame::ExtM3UeditFrame(wxWindow* parent,wxWindowID id)
     Connect(idMenuSave,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&ExtM3UeditFrame::OnSaveMenuItemSelected);
     Connect(idMenuSaveAs,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&ExtM3UeditFrame::OnSaveAsMenuItemSelected);
     Connect(idMenuQuit,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&ExtM3UeditFrame::OnQuit);
+    Connect(idMenuNormalize,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&ExtM3UeditFrame::OnNormalizeMenuItemSelected);
     Connect(idMenuAbout,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&ExtM3UeditFrame::OnAbout);
     //*)
     EntryListView->Connect(wxEVT_SIZE,(wxObjectEventFunction)&ExtM3UeditFrame::OnEntryListViewResize,0,this);
@@ -279,4 +287,9 @@ void ExtM3UeditFrame::OnAttrDownButtonClick(wxCommandEvent& /*event*/)
 void ExtM3UeditFrame::OnRemoveAttrButtonClick(wxCommandEvent& /*event*/)
 {
     ParametersView->removeAttr();
+}
+
+void ExtM3UeditFrame::OnNormalizeMenuItemSelected(wxCommandEvent& /*event*/)
+{
+    m_editor.normalize();
 }

@@ -151,6 +151,14 @@
 					<handler function="OnQuit" entry="EVT_MENU" />
 				</object>
 			</object>
+			<object class="wxMenu" variable="ToolsMenu" member="no">
+				<label>Tools</label>
+				<object class="wxMenuItem" name="idMenuNormalize" variable="NormalizeMenuItem" member="no">
+					<label>Normalize</label>
+					<help>Convert playlist to match Extended M3U specification</help>
+					<handler function="OnNormalizeMenuItemSelected" entry="EVT_MENU" />
+				</object>
+			</object>
 			<object class="wxMenu" variable="HelpMenu" member="no">
 				<label>Help</label>
 				<object class="wxMenuItem" name="idMenuAbout" variable="AboutMenuItem" member="no">
