@@ -153,6 +153,8 @@ void EMParametersView::doUpdate()
         for(Index i=0; i<an; ++i)
             m_attr_cat->Item(i)->SetValueFromString(m_editor->getAttrVal(m_entry, i));
     }
+
+    Refresh();
 }
 
 Index EMParametersView::getSelectedAttr() const
