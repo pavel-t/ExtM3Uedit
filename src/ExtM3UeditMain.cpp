@@ -28,6 +28,8 @@ const long ExtM3UeditFrame::ID_ENTRYDOWN_BITMAPBUTTON = wxNewId();
 const long ExtM3UeditFrame::ID_REMOVEENTRY_BITMAPBUTTON = wxNewId();
 const long ExtM3UeditFrame::ID_ENTRY_LISTVIEW = wxNewId();
 const long ExtM3UeditFrame::ID_PARAM_VIEW = wxNewId();
+const long ExtM3UeditFrame::ID_ADDATTR_BITMAPBUTTON = wxNewId();
+const long ExtM3UeditFrame::ID_REMOVEATTR_BITMAPBUTTON = wxNewId();
 const long ExtM3UeditFrame::ID_MAIN_PANEL = wxNewId();
 const long ExtM3UeditFrame::idMenuNew = wxNewId();
 const long ExtM3UeditFrame::idMenuOpen = wxNewId();
@@ -49,6 +51,7 @@ ExtM3UeditFrame::ExtM3UeditFrame(wxWindow* parent,wxWindowID id)
     //(*Initialize(ExtM3UeditFrame)
     wxBoxSizer* BoxSizer1;
     wxBoxSizer* BoxSizer2;
+    wxBoxSizer* BoxSizer3;
     wxMenu* FileMenu;
     wxMenu* HelpMenu;
     wxMenuBar* MenuBar;
@@ -77,6 +80,12 @@ ExtM3UeditFrame::ExtM3UeditFrame(wxWindow* parent,wxWindowID id)
     BoxSizer1->Add(EntryListView, 1, wxALL|wxEXPAND, 5);
     ParametersView = new EMParametersView(MainPanel,ID_PARAM_VIEW,wxDefaultPosition,wxSize(280,590),0,_T("ID_PARAM_VIEW"));
     BoxSizer1->Add(ParametersView, 0, wxALL|wxEXPAND|wxFIXED_MINSIZE, 5);
+    BoxSizer3 = new wxBoxSizer(wxVERTICAL);
+    AddAttrButton = new wxBitmapButton(MainPanel, ID_ADDATTR_BITMAPBUTTON, wxArtProvider::GetBitmap(wxART_MAKE_ART_ID_FROM_STR(_T("wxART_PLUS")),wxART_BUTTON), wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW, wxDefaultValidator, _T("ID_ADDATTR_BITMAPBUTTON"));
+    BoxSizer3->Add(AddAttrButton, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
+    RemoveAttrButton = new wxBitmapButton(MainPanel, ID_REMOVEATTR_BITMAPBUTTON, wxArtProvider::GetBitmap(wxART_MAKE_ART_ID_FROM_STR(_T("wxART_DELETE")),wxART_BUTTON), wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW, wxDefaultValidator, _T("ID_REMOVEATTR_BITMAPBUTTON"));
+    BoxSizer3->Add(RemoveAttrButton, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
+    BoxSizer1->Add(BoxSizer3, 0, wxTOP|wxBOTTOM|wxRIGHT|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
     MainPanel->SetSizer(BoxSizer1);
     BoxSizer1->Fit(MainPanel);
     BoxSizer1->SetSizeHints(MainPanel);
@@ -116,6 +125,8 @@ ExtM3UeditFrame::ExtM3UeditFrame(wxWindow* parent,wxWindowID id)
     Connect(ID_ENTRYDOWN_BITMAPBUTTON,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&ExtM3UeditFrame::OnEntryDownButtonClick);
     Connect(ID_REMOVEENTRY_BITMAPBUTTON,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&ExtM3UeditFrame::OnRemoveEntryButtonClick);
     Connect(ID_ENTRY_LISTVIEW,wxEVT_COMMAND_LIST_ITEM_SELECTED,(wxObjectEventFunction)&ExtM3UeditFrame::OnEntryListViewItemSelect);
+    Connect(ID_ADDATTR_BITMAPBUTTON,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&ExtM3UeditFrame::OnAddAttrButtonClick);
+    Connect(ID_REMOVEATTR_BITMAPBUTTON,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&ExtM3UeditFrame::OnRemoveAttrButtonClick);
     Connect(idMenuNew,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&ExtM3UeditFrame::OnNewMenuItemSelected);
     Connect(idMenuOpen,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&ExtM3UeditFrame::OnOpenMenuItemSelected);
     Connect(idMenuSave,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&ExtM3UeditFrame::OnSaveMenuItemSelected);
@@ -240,4 +251,14 @@ void ExtM3UeditFrame::OnRemoveEntryButtonClick(wxCommandEvent& /*event*/)
 void ExtM3UeditFrame::OnEntryListViewItemSelect(wxListEvent& /*event*/)
 {
     ParametersView->selectEntry(EntryListView->GetFirstSelected());
+}
+
+void ExtM3UeditFrame::OnAddAttrButtonClick(wxCommandEvent& /*event*/)
+{
+    ParametersView->addAttr();
+}
+
+void ExtM3UeditFrame::OnRemoveAttrButtonClick(wxCommandEvent& /*event*/)
+{
+    ParametersView->removeAttr();
 }

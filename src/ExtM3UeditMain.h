@@ -46,6 +46,8 @@ private:
     void OnRemoveEntryButtonClick(wxCommandEvent& event);
     void OnEntryListViewResize(wxSizeEvent& event);
     void OnEntryListViewItemSelect(wxListEvent& event);
+    void OnAddAttrButtonClick(wxCommandEvent& event);
+    void OnRemoveAttrButtonClick(wxCommandEvent& event);
     //*)
 
     //(*Identifiers(ExtM3UeditFrame)
@@ -55,6 +57,8 @@ private:
     static const long ID_REMOVEENTRY_BITMAPBUTTON;
     static const long ID_ENTRY_LISTVIEW;
     static const long ID_PARAM_VIEW;
+    static const long ID_ADDATTR_BITMAPBUTTON;
+    static const long ID_REMOVEATTR_BITMAPBUTTON;
     static const long ID_MAIN_PANEL;
     static const long idMenuNew;
     static const long idMenuOpen;
@@ -68,9 +72,11 @@ private:
     //(*Declarations(ExtM3UeditFrame)
     EMEntryListView* EntryListView;
     EMParametersView* ParametersView;
+    wxBitmapButton* AddAttrButton;
     wxBitmapButton* AddEntryButton;
     wxBitmapButton* EntryDownButton;
     wxBitmapButton* EntryUpButton;
+    wxBitmapButton* RemoveAttrButton;
     wxBitmapButton* RemoveEntryButton;
     wxPanel* MainPanel;
     wxStatusBar* StatusBar;

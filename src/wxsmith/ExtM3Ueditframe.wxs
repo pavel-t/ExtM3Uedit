@@ -67,6 +67,31 @@
 					<flag>wxALL|wxEXPAND|wxFIXED_MINSIZE</flag>
 					<border>5</border>
 				</object>
+				<object class="sizeritem">
+					<object class="wxBoxSizer" variable="BoxSizer3" member="no">
+						<orient>wxVERTICAL</orient>
+						<object class="sizeritem">
+							<object class="wxBitmapButton" name="ID_ADDATTR_BITMAPBUTTON" variable="AddAttrButton" member="yes">
+								<bitmap stock_id="wxART_PLUS" stock_client="wxART_BUTTON" />
+								<handler function="OnAddAttrButtonClick" entry="EVT_BUTTON" />
+							</object>
+							<flag>wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
+							<border>5</border>
+							<option>1</option>
+						</object>
+						<object class="sizeritem">
+							<object class="wxBitmapButton" name="ID_REMOVEATTR_BITMAPBUTTON" variable="RemoveAttrButton" member="yes">
+								<bitmap stock_id="wxART_DELETE" stock_client="wxART_BUTTON" />
+								<handler function="OnRemoveAttrButtonClick" entry="EVT_BUTTON" />
+							</object>
+							<flag>wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
+							<border>5</border>
+							<option>1</option>
+						</object>
+					</object>
+					<flag>wxTOP|wxBOTTOM|wxRIGHT|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
+					<border>5</border>
+				</object>
 			</object>
 		</object>
 		<object class="wxMenuBar" variable="MenuBar" member="no">

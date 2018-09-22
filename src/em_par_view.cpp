@@ -8,6 +8,7 @@
  **************************************************************/
 
 #include "em_par_view.h"
+#include <wx/textdlg.h>
 
 void EMParametersView::initEditor(EMEditor* e)
 {
@@ -61,6 +62,33 @@ void EMParametersView::onChanged(wxPropertyGridEvent& event)
         m_editor->setURL(m_entry, event.GetPropertyValue().GetString());
     else
         m_editor->setAttrVal(m_entry, m_attr_cat->Index(p), event.GetPropertyValue().GetString());
+}
+
+void EMParametersView::addAttr()
+{
+    if(m_entry == -1)
+        return;
+
+    wxTextEntryDialog d(this, "Enter new attribute name");
+    if(d.ShowModal() == wxID_OK)
+    {
+        auto s = getSelectedAttr();
+        if (s == -1)
+            s = m_editor->getAttrNumber(m_entry);
+        m_editor->addAttr(m_entry, s, d.GetValue());
+    }
+}
+
+void EMParametersView::removeAttr()
+{
+    if(m_entry == -1)
+        return;
+
+    auto s = getSelectedAttr();
+    if (s == -1)
+        return;
+
+    m_editor->removeAttr(m_entry, s);
 }
 
 void EMParametersView::doDeselectEntry()
@@ -125,4 +153,16 @@ void EMParametersView::doUpdate()
         for(Index i=0; i<an; ++i)
             m_attr_cat->Item(i)->SetValueFromString(m_editor->getAttrVal(m_entry, i));
     }
+}
+
+Index EMParametersView::getSelectedAttr() const
+{
+    if(!m_attr_cat)
+        return -1;
+
+    auto s = GetSelection();
+    if(!s)
+        return -1;
+
+    return m_attr_cat->Index(s);
 }

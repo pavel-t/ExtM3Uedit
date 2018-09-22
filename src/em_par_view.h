@@ -25,10 +25,14 @@ public:
 
     void onChanged(wxPropertyGridEvent& event);
 
+    void addAttr();
+    void removeAttr();
+
 private:
     void doDeselectEntry();
     void doSelectEntry(Index ei);
     void doUpdate();
+    Index getSelectedAttr() const;
 
     EMEditor* m_editor;
     Index m_entry;
