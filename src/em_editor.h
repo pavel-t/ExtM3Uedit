@@ -68,6 +68,8 @@ public:
 
     void addAttr(Index i, Index ia, wxString key);
     void removeAttr(Index i, Index ia);
+    void moveAttrUp(Index i, Index ia);
+    void moveAttrDown(Index i, Index ia);
 
     void setLength(Index i, int l);
     void setName(Index i, wxString n);

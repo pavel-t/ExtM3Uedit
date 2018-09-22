@@ -144,6 +144,24 @@ void EMEditor::removeAttr(Index i, Index ia)
     notify(EMUpdateMode::Update, i);
 }
 
+void EMEditor::moveAttrUp(Index i, Index ia)
+{
+    if(ia == 0)
+        return;
+
+    std::iter_swap(attrIter(i, ia), attrIter(i, ia-1));
+    notify(EMUpdateMode::Update, i);
+}
+
+void EMEditor::moveAttrDown(Index i, Index ia)
+{
+    if(ia+1 >= getAttrNumber(i))
+        return;
+
+    std::iter_swap(attrIter(i, ia), attrIter(i, ia+1));
+    notify(EMUpdateMode::Update, i);
+}
+
 void EMEditor::setLength(Index i, int l)
 {
     m_data->getEntries()[i].getExtinf().setLen(l);

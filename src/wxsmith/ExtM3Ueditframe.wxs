@@ -80,6 +80,24 @@
 							<option>1</option>
 						</object>
 						<object class="sizeritem">
+							<object class="wxBitmapButton" name="ID_ATTRUP_BITMAPBUTTON" variable="AttrUpButton" member="yes">
+								<bitmap stock_id="wxART_GO_UP" stock_client="wxART_BUTTON" />
+								<handler function="OnAttrUpButtonClick" entry="EVT_BUTTON" />
+							</object>
+							<flag>wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
+							<border>5</border>
+							<option>1</option>
+						</object>
+						<object class="sizeritem">
+							<object class="wxBitmapButton" name="ID_ATTRDOWN_BITMAPBUTTON" variable="AttrDownButton" member="yes">
+								<bitmap stock_id="wxART_GO_DOWN" stock_client="wxART_BUTTON" />
+								<handler function="OnAttrDownButtonClick" entry="EVT_BUTTON" />
+							</object>
+							<flag>wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
+							<border>5</border>
+							<option>1</option>
+						</object>
+						<object class="sizeritem">
 							<object class="wxBitmapButton" name="ID_REMOVEATTR_BITMAPBUTTON" variable="RemoveAttrButton" member="yes">
 								<bitmap stock_id="wxART_DELETE" stock_client="wxART_BUTTON" />
 								<handler function="OnRemoveAttrButtonClick" entry="EVT_BUTTON" />

@@ -48,6 +48,8 @@ private:
     void OnEntryListViewItemSelect(wxListEvent& event);
     void OnAddAttrButtonClick(wxCommandEvent& event);
     void OnRemoveAttrButtonClick(wxCommandEvent& event);
+    void OnAttrUpButtonClick(wxCommandEvent& event);
+    void OnAttrDownButtonClick(wxCommandEvent& event);
     //*)
 
     //(*Identifiers(ExtM3UeditFrame)
@@ -58,6 +60,8 @@ private:
     static const long ID_ENTRY_LISTVIEW;
     static const long ID_PARAM_VIEW;
     static const long ID_ADDATTR_BITMAPBUTTON;
+    static const long ID_ATTRUP_BITMAPBUTTON;
+    static const long ID_ATTRDOWN_BITMAPBUTTON;
     static const long ID_REMOVEATTR_BITMAPBUTTON;
     static const long ID_MAIN_PANEL;
     static const long idMenuNew;
@@ -74,6 +78,8 @@ private:
     EMParametersView* ParametersView;
     wxBitmapButton* AddAttrButton;
     wxBitmapButton* AddEntryButton;
+    wxBitmapButton* AttrDownButton;
+    wxBitmapButton* AttrUpButton;
     wxBitmapButton* EntryDownButton;
     wxBitmapButton* EntryUpButton;
     wxBitmapButton* RemoveAttrButton;

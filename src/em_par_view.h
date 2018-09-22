@@ -26,6 +26,8 @@ public:
     void onChanged(wxPropertyGridEvent& event);
 
     void addAttr();
+    void attrUp();
+    void attrDown();
     void removeAttr();
 
 private:

@@ -79,6 +79,26 @@ void EMParametersView::addAttr()
     }
 }
 
+void EMParametersView::attrUp()
+{
+    if(m_entry == -1)
+        return;
+
+    auto s = getSelectedAttr();
+    if (s != -1)
+        m_editor->moveAttrUp(m_entry, s);
+}
+
+void EMParametersView::attrDown()
+{
+    if(m_entry == -1)
+        return;
+
+    auto s = getSelectedAttr();
+    if(s != -1)
+        m_editor->moveAttrDown(m_entry, s);
+}
+
 void EMParametersView::removeAttr()
 {
     if(m_entry == -1)
