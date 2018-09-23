@@ -187,6 +187,7 @@ void ExtM3UeditFrame::OnAbout(wxCommandEvent& /*event*/)
     a.SetDescription("Extended M3U playlist editor\n\n"
         "License: GNU General Public License v3.0");
     a.SetCopyright("(C) 2018 Pavel Tyunin <pavel51tunin@gmail.com>");
+    a.SetWebSite("https://github.com/pavel-t/ExtM3Uedit");
     a.SetIcon(wxIcon("aaaa", wxBITMAP_TYPE_ICO_RESOURCE, 64, 64));
     wxAboutBox(a, this);
 }
