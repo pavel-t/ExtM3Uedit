@@ -4,7 +4,7 @@
  * Author:    Pavel Tyunin (pavel51tunin@gmail.com)
  * Created:   2018-08-07
  * Copyright: Pavel Tyunin
- * License:
+ * License:   GNU General Public License v3.0
  **************************************************************/
 
 #include "ExtM3UeditMain.h"
@@ -184,7 +184,8 @@ void ExtM3UeditFrame::OnAbout(wxCommandEvent& /*event*/)
 {
     wxAboutDialogInfo a;
     a.SetVersion(getAppVersion());
-    a.SetDescription("Extended M3U playlist editor");
+    a.SetDescription("Extended M3U playlist editor\n\n"
+        "License: GNU General Public License v3.0");
     a.SetCopyright("(C) 2018 Pavel Tyunin <pavel51tunin@gmail.com>");
     a.SetIcon(wxIcon("aaaa", wxBITMAP_TYPE_ICO_RESOURCE, 64, 64));
     wxAboutBox(a, this);

@@ -4,7 +4,7 @@
  * Author:    Pavel Tyunin (pavel51tunin@gmail.com)
  * Created:   2018-08-29
  * Copyright: Pavel Tyunin
- * License:
+ * License:   GNU General Public License v3.0
  **************************************************************/
 
 #ifndef EM_EDITOR_H
