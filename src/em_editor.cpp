@@ -97,7 +97,6 @@ void EMEditor::saveFileAs(wxString name)
 void EMEditor::addEntry(Index i, wxString url)
 {
     std::vector<std::unique_ptr<EMLine>> l;
-    l.push_back(EMLine::parse("#EXTINF:"));
     l.push_back(EMLine::parse(std::move(url)));
 
     m_data->getEntries().emplace(entryIter(i), std::move(l));
