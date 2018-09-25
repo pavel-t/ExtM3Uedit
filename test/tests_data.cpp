@@ -442,7 +442,7 @@ TEST_CASE("Parsing EXTINF", "[parse]")
 
 TEST_CASE("Editing and generating EXTINF", "[edit][generate]")
 {
-    EMLineExtinf l("#EXTINF:");
+    EMLineExtinf l = EMLineExtinf::makeEmpty();
     REQUIRE_FALSE(l.hasLen());
     REQUIRE_FALSE(l.hasAttributes());
     REQUIRE_FALSE(l.hasName());
