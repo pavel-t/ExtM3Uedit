@@ -106,6 +106,7 @@ public:
     void setAfterAttr(wxString aa) { m_after_attr = std::move(aa); }
 
 protected:
+    EMLineDirectiveBase() {}
     virtual wxString attrString() const;
     void parseAttr(const wxString& attr);
 
@@ -151,7 +152,10 @@ public:
     wxString getName() const { return m_name; }
     void setName(wxString name);
 
+    static EMLineExtinf makeEmpty() { return EMLineExtinf(); };
 private:
+    EMLineExtinf() {}
+
     wxString attrString() const override;
 
     wxString m_pre_len;
@@ -170,10 +174,10 @@ public:
     auto& getLines() const { return m_lines; }
 
     bool hasExtinf() { return m_extinf; }
-    auto& getExtinf() { return *m_extinf; }
+    EMLineExtinf& getExtinf();
 
     bool hasURL() { return m_url; }
-    auto& getURL() { return *m_url; }
+    EMLineURL& getURL();
 
 private:
     std::vector<std::unique_ptr<EMLine>> m_lines;

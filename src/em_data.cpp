@@ -267,6 +267,30 @@ wxArrayString EMEntry::toText() const
     return t;
 }
 
+EMLineExtinf& EMEntry::getExtinf()
+{
+    if(!m_extinf)
+    {
+        auto p = std::make_unique<EMLineExtinf>(EMLineExtinf::makeEmpty());
+        auto extinf = p.get();
+        m_lines.insert(m_lines.begin(), std::move(p));
+        m_extinf = extinf;
+    }
+    return *m_extinf;
+}
+
+EMLineURL& EMEntry::getURL()
+{
+    if(!m_url)
+    {
+        auto p = std::make_unique<EMLineURL>("url");
+        auto url = p.get();
+        m_lines.push_back(std::move(p));
+        m_url = url;
+    }
+    return *m_url;
+}
+
 std::unique_ptr<EMLine> EMLine::parse(const wxString& line)
 {
     // Empty line
