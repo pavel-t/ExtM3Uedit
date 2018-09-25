@@ -135,6 +135,7 @@ void EMParametersView::doSelectEntry(Index ei)
 
 void EMParametersView::doUpdate()
 {
+    m_len->SetValueToUnspecified();
     m_len->SetValueFromString(m_editor->getLength(m_entry));
     m_name->SetValueFromString(m_editor->getName(m_entry));
     m_url->SetValueFromString(m_editor->getURL(m_entry));
