@@ -167,7 +167,7 @@ ExtM3UeditFrame::~ExtM3UeditFrame()
     //*)
 }
 
-inline wxString getAppVersion() { return "v0.1-dev"; }
+inline wxString getAppVersion() { return "v0.1-alpha"; }
 
 void ExtM3UeditFrame::notify(EMUpdateMode t, Index /*begin*/, Index /*end*/)
 {
