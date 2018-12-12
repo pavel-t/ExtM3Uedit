@@ -11,6 +11,7 @@
 						<object class="sizeritem">
 							<object class="wxBitmapButton" name="ID_ADDENTRY_BITMAPBUTTON" variable="AddEntryButton" member="yes">
 								<bitmap stock_id="wxART_PLUS" stock_client="wxART_BUTTON" />
+								<tooltip>Create a new entry</tooltip>
 								<handler function="OnAddEntryButtonClick" entry="EVT_BUTTON" />
 							</object>
 							<flag>wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
@@ -20,6 +21,7 @@
 						<object class="sizeritem">
 							<object class="wxBitmapButton" name="ID_ENTRYUP_BITMAPBUTTON" variable="EntryUpButton" member="yes">
 								<bitmap stock_id="wxART_GO_UP" stock_client="wxART_BUTTON" />
+								<tooltip>Move the selected entry up</tooltip>
 								<handler function="OnEntryUpButtonClick" entry="EVT_BUTTON" />
 							</object>
 							<flag>wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
@@ -29,6 +31,7 @@
 						<object class="sizeritem">
 							<object class="wxBitmapButton" name="ID_ENTRYDOWN_BITMAPBUTTON" variable="EntryDownButton" member="yes">
 								<bitmap stock_id="wxART_GO_DOWN" stock_client="wxART_BUTTON" />
+								<tooltip>Move the selected entry down</tooltip>
 								<handler function="OnEntryDownButtonClick" entry="EVT_BUTTON" />
 							</object>
 							<flag>wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
@@ -38,6 +41,7 @@
 						<object class="sizeritem">
 							<object class="wxBitmapButton" name="ID_REMOVEENTRY_BITMAPBUTTON" variable="RemoveEntryButton" member="yes">
 								<bitmap stock_id="wxART_DELETE" stock_client="wxART_BUTTON" />
+								<tooltip>Delete the selected entry</tooltip>
 								<handler function="OnRemoveEntryButtonClick" entry="EVT_BUTTON" />
 							</object>
 							<flag>wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
@@ -73,6 +77,7 @@
 						<object class="sizeritem">
 							<object class="wxBitmapButton" name="ID_ADDATTR_BITMAPBUTTON" variable="AddAttrButton" member="yes">
 								<bitmap stock_id="wxART_PLUS" stock_client="wxART_BUTTON" />
+								<tooltip>Add a new attribute to the selected entry</tooltip>
 								<handler function="OnAddAttrButtonClick" entry="EVT_BUTTON" />
 							</object>
 							<flag>wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
@@ -82,6 +87,7 @@
 						<object class="sizeritem">
 							<object class="wxBitmapButton" name="ID_ATTRUP_BITMAPBUTTON" variable="AttrUpButton" member="yes">
 								<bitmap stock_id="wxART_GO_UP" stock_client="wxART_BUTTON" />
+								<tooltip>Move the selected attribute up</tooltip>
 								<handler function="OnAttrUpButtonClick" entry="EVT_BUTTON" />
 							</object>
 							<flag>wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
@@ -91,6 +97,7 @@
 						<object class="sizeritem">
 							<object class="wxBitmapButton" name="ID_ATTRDOWN_BITMAPBUTTON" variable="AttrDownButton" member="yes">
 								<bitmap stock_id="wxART_GO_DOWN" stock_client="wxART_BUTTON" />
+								<tooltip>Move the selected attribute down</tooltip>
 								<handler function="OnAttrDownButtonClick" entry="EVT_BUTTON" />
 							</object>
 							<flag>wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
@@ -100,6 +107,7 @@
 						<object class="sizeritem">
 							<object class="wxBitmapButton" name="ID_REMOVEATTR_BITMAPBUTTON" variable="RemoveAttrButton" member="yes">
 								<bitmap stock_id="wxART_DELETE" stock_client="wxART_BUTTON" />
+								<tooltip>Delete the selected attribute</tooltip>
 								<handler function="OnRemoveAttrButtonClick" entry="EVT_BUTTON" />
 							</object>
 							<flag>wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
