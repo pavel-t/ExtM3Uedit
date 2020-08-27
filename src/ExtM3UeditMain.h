@@ -51,6 +51,9 @@ private:
     void OnAttrUpButtonClick(wxCommandEvent& event);
     void OnAttrDownButtonClick(wxCommandEvent& event);
     void OnNormalizeMenuItemSelected(wxCommandEvent& event);
+    void OnEncodingUTF8MenuItemSelected(wxCommandEvent& event);
+    void OnEncodingANSIMenuItemSelected(wxCommandEvent& event);
+    void OnEncodingBOMMenuItemSelected(wxCommandEvent& event);
     //*)
 
     //(*Identifiers(ExtM3UeditFrame)
@@ -69,6 +72,11 @@ private:
     static const long idMenuOpen;
     static const long idMenuSave;
     static const long idMenuSaveAs;
+    static const long idMenuEncodingUTF8;
+    static const long idMenuEncodingANSI;
+    static const long idMenuEncodingUnknown;
+    static const long idMenuEncodingBOM;
+    static const long idMenuEncoding;
     static const long idMenuQuit;
     static const long idMenuNormalize;
     static const long idMenuAbout;
@@ -86,6 +94,11 @@ private:
     wxBitmapButton* EntryUpButton;
     wxBitmapButton* RemoveAttrButton;
     wxBitmapButton* RemoveEntryButton;
+    wxMenu* EncodingMenu;
+    wxMenuItem* EncodingANSIMenuItem;
+    wxMenuItem* EncodingBOMMenuItem;
+    wxMenuItem* EncodingUTF8MenuItem;
+    wxMenuItem* EncodingUnknownMenuItem;
     wxPanel* MainPanel;
     wxStatusBar* StatusBar;
     //*)

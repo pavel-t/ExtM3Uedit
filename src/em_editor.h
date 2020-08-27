@@ -60,6 +60,10 @@ public:
     void saveFile();
     void saveFileAs(wxString name);
     bool isSaveable() const { return m_file.isOpened(); }
+    Encoding getFileEncoding() const noexcept { return m_file.getEncoding(); }
+    void setFileEncoding(Encoding e);
+    bool getFileBOM() const noexcept { return m_file.getBOM(); }
+    void setFileBOM(bool bom);
 
     void addEntry(Index i, wxString url);
     void removeEntry(Index i);

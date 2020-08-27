@@ -151,6 +151,30 @@
 					<bitmap stock_id="wxART_FILE_SAVE_AS" stock_client="wxART_MENU" />
 					<handler function="OnSaveAsMenuItemSelected" entry="EVT_MENU" />
 				</object>
+				<object class="wxMenu" name="idMenuEncoding" variable="EncodingMenu" member="yes">
+					<label>Encoding</label>
+					<object class="wxMenuItem" name="idMenuEncodingUTF8" variable="EncodingUTF8MenuItem" member="yes">
+						<label>UTF8</label>
+						<handler function="OnEncodingUTF8MenuItemSelected" entry="EVT_MENU" />
+						<radio>1</radio>
+					</object>
+					<object class="wxMenuItem" name="idMenuEncodingANSI" variable="EncodingANSIMenuItem" member="yes">
+						<label>ANSI</label>
+						<handler function="OnEncodingANSIMenuItemSelected" entry="EVT_MENU" />
+						<radio>1</radio>
+					</object>
+					<object class="wxMenuItem" name="idMenuEncodingUnknown" variable="EncodingUnknownMenuItem" member="yes">
+						<label>Unknown</label>
+						<radio>1</radio>
+					</object>
+					<object class="separator" />
+					<object class="wxMenuItem" name="idMenuEncodingBOM" variable="EncodingBOMMenuItem" member="yes">
+						<label>BOM</label>
+						<checked>1</checked>
+						<handler function="OnEncodingBOMMenuItemSelected" entry="EVT_MENU" />
+						<checkable>1</checkable>
+					</object>
+				</object>
 				<object class="wxMenuItem" name="idMenuQuit" variable="QuitMenuItem" member="no">
 					<label>Quit</label>
 					<accel>Alt+F4</accel>

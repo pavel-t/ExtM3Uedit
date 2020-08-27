@@ -37,6 +37,11 @@ const long ExtM3UeditFrame::idMenuNew = wxNewId();
 const long ExtM3UeditFrame::idMenuOpen = wxNewId();
 const long ExtM3UeditFrame::idMenuSave = wxNewId();
 const long ExtM3UeditFrame::idMenuSaveAs = wxNewId();
+const long ExtM3UeditFrame::idMenuEncodingUTF8 = wxNewId();
+const long ExtM3UeditFrame::idMenuEncodingANSI = wxNewId();
+const long ExtM3UeditFrame::idMenuEncodingUnknown = wxNewId();
+const long ExtM3UeditFrame::idMenuEncodingBOM = wxNewId();
+const long ExtM3UeditFrame::idMenuEncoding = wxNewId();
 const long ExtM3UeditFrame::idMenuQuit = wxNewId();
 const long ExtM3UeditFrame::idMenuNormalize = wxNewId();
 const long ExtM3UeditFrame::idMenuAbout = wxNewId();
@@ -120,6 +125,18 @@ ExtM3UeditFrame::ExtM3UeditFrame(wxWindow* parent,wxWindowID id)
     SaveAsMenuItem = new wxMenuItem(FileMenu, idMenuSaveAs, _("Save As...\tCtrl+Alt+S"), _("Save the playlist under a different name"), wxITEM_NORMAL);
     SaveAsMenuItem->SetBitmap(wxArtProvider::GetBitmap(wxART_MAKE_ART_ID_FROM_STR(_T("wxART_FILE_SAVE_AS")),wxART_MENU));
     FileMenu->Append(SaveAsMenuItem);
+    EncodingMenu = new wxMenu();
+    EncodingUTF8MenuItem = new wxMenuItem(EncodingMenu, idMenuEncodingUTF8, _("UTF8"), wxEmptyString, wxITEM_RADIO);
+    EncodingMenu->Append(EncodingUTF8MenuItem);
+    EncodingANSIMenuItem = new wxMenuItem(EncodingMenu, idMenuEncodingANSI, _("ANSI"), wxEmptyString, wxITEM_RADIO);
+    EncodingMenu->Append(EncodingANSIMenuItem);
+    EncodingUnknownMenuItem = new wxMenuItem(EncodingMenu, idMenuEncodingUnknown, _("Unknown"), wxEmptyString, wxITEM_RADIO);
+    EncodingMenu->Append(EncodingUnknownMenuItem);
+    EncodingMenu->AppendSeparator();
+    EncodingBOMMenuItem = new wxMenuItem(EncodingMenu, idMenuEncodingBOM, _("BOM"), wxEmptyString, wxITEM_CHECK);
+    EncodingMenu->Append(EncodingBOMMenuItem);
+    EncodingBOMMenuItem->Check(true);
+    FileMenu->Append(idMenuEncoding, _("Encoding"), EncodingMenu, wxEmptyString);
     QuitMenuItem = new wxMenuItem(FileMenu, idMenuQuit, _("Quit\tAlt+F4"), _("Quit the application"), wxITEM_NORMAL);
     QuitMenuItem->SetBitmap(wxArtProvider::GetBitmap(wxART_MAKE_ART_ID_FROM_STR(_T("wxART_QUIT")),wxART_MENU));
     FileMenu->Append(QuitMenuItem);
@@ -154,6 +171,9 @@ ExtM3UeditFrame::ExtM3UeditFrame(wxWindow* parent,wxWindowID id)
     Connect(idMenuOpen,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&ExtM3UeditFrame::OnOpenMenuItemSelected);
     Connect(idMenuSave,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&ExtM3UeditFrame::OnSaveMenuItemSelected);
     Connect(idMenuSaveAs,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&ExtM3UeditFrame::OnSaveAsMenuItemSelected);
+    Connect(idMenuEncodingUTF8,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&ExtM3UeditFrame::OnEncodingUTF8MenuItemSelected);
+    Connect(idMenuEncodingANSI,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&ExtM3UeditFrame::OnEncodingANSIMenuItemSelected);
+    Connect(idMenuEncodingBOM,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&ExtM3UeditFrame::OnEncodingBOMMenuItemSelected);
     Connect(idMenuQuit,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&ExtM3UeditFrame::OnQuit);
     Connect(idMenuNormalize,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&ExtM3UeditFrame::OnNormalizeMenuItemSelected);
     Connect(idMenuAbout,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&ExtM3UeditFrame::OnAbout);
@@ -180,7 +200,28 @@ inline wxString getAppVersion() { return "v0.1-alpha"; }
 void ExtM3UeditFrame::notify(EMUpdateMode t, Index /*begin*/, Index /*end*/)
 {
     if(t == EMUpdateMode::Reset || t == EMUpdateMode::Info)
+    {
         SetTitle(m_editor.getFileName() + " - " + wxTheApp->GetAppName() + ' ' + getAppVersion());
+        bool unknown_visible = EncodingMenu->FindChildItem(idMenuEncodingUnknown) == EncodingUnknownMenuItem;
+        auto enc = m_editor.getFileEncoding();
+        switch(enc)
+        {
+        case Encoding::ANSI:
+            EncodingANSIMenuItem->Check();
+            break;
+        case Encoding::UTF8:
+            EncodingUTF8MenuItem->Check();
+            break;
+        case Encoding::Unknown:
+            if(!unknown_visible)
+                EncodingMenu->Insert(2, EncodingUnknownMenuItem);
+            EncodingUnknownMenuItem->Check();
+        }
+        if(unknown_visible && !EncodingUnknownMenuItem->IsChecked())
+            EncodingMenu->Remove(EncodingUnknownMenuItem);
+        EncodingBOMMenuItem->Enable(enc != Encoding::ANSI);
+        EncodingBOMMenuItem->Check(m_editor.getFileBOM());
+    }
 }
 
 void ExtM3UeditFrame::OnQuit(wxCommandEvent& /*event*/)
@@ -302,4 +343,19 @@ void ExtM3UeditFrame::OnRemoveAttrButtonClick(wxCommandEvent& /*event*/)
 void ExtM3UeditFrame::OnNormalizeMenuItemSelected(wxCommandEvent& /*event*/)
 {
     m_editor.normalize();
+}
+
+void ExtM3UeditFrame::OnEncodingUTF8MenuItemSelected(wxCommandEvent& /*event*/)
+{
+    m_editor.setFileEncoding(Encoding::UTF8);
+}
+
+void ExtM3UeditFrame::OnEncodingANSIMenuItemSelected(wxCommandEvent& /*event*/)
+{
+    m_editor.setFileEncoding(Encoding::ANSI);
+}
+
+void ExtM3UeditFrame::OnEncodingBOMMenuItemSelected(wxCommandEvent& /*event*/)
+{
+    m_editor.setFileBOM(EncodingBOMMenuItem->IsChecked());
 }

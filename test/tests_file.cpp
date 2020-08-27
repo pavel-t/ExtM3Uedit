@@ -11,11 +11,12 @@
 #include "../src/em_file.h"
 #include <wx/file.h>
 
+static wxString fn = "test.txt";
+
 TEST_CASE("Files reading and writing", "[file]")
 {
     auto CheckFile = [](const wxArrayString& lines)
     {
-        wxString fn = "test.txt";
         wxString fd = wxJoin(lines, '\n');
         wxArrayString lines_read;
         EMFile f;
@@ -71,4 +72,78 @@ TEST_CASE("Files reading and writing", "[file]")
     CheckFile(d);
     d.emplace_back();
     CheckFile(d);
+}
+
+static void CompareFile(std::string d)
+{
+    wxFile f;
+    REQUIRE(f.Open(fn));
+    size_t s = d.size();
+    CHECK(f.Length() == s);
+    std::string buf(s, '\0');
+    CHECK(f.Read(buf.data(), s) == (int)s);
+    CHECK(d == buf);
+}
+
+TEST_CASE("Encoding detection", "[file][encoding]")
+{
+    auto DoCheck = [](std::string fd, Encoding enc, bool bom, auto info)
+    {
+        INFO(info);
+        size_t s = fd.size();
+        {
+            wxFile rf;
+            REQUIRE(rf.Create(fn, true));
+            REQUIRE(rf.Write(fd.data(), s) == s);
+        }
+
+        {
+            EMFile f;
+            auto as = f.open(fn);
+            REQUIRE(f.isOpened());
+            CHECK(f.getEncoding() == enc);
+            CHECK(f.getBOM() == bom);
+            f.save(as);
+        }
+
+        CompareFile(fd);
+        wxRemoveFile(fn);
+    };
+
+    DoCheck("", Encoding::UTF8, false, "Empty file -> UTF8");
+    DoCheck("qwerty!@#$%^&*()\nasdf\n12345", Encoding::UTF8, false, "ASCII only -> UTF8");
+    DoCheck("\xF4\xFB\xE2\xE0", Encoding::ANSI, false, "ANSI");
+    DoCheck("\xd1\x84\xd1\x8b\xd0\xb2\xd0\xb0", Encoding::UTF8, false, "UTF8");
+    DoCheck("\xEF\xBB\xBF\xd1\x84\xd1\x8b\xd0\xb2\xd0\xb0", Encoding::UTF8, true, "UTF8-BOM");
+    DoCheck("\xEF\xBB\xBFqwerty!@#$%^&*()_12345", Encoding::UTF8, true, "UTF8-BOM (ASCII only)");
+    DoCheck("\xEF\xBB\xBF", Encoding::UTF8, true, "UTF8-BOM (empty file)");
+}
+
+TEST_CASE("Encoding selection", "[file][encoding]")
+{
+    auto DoCheck = [](wxString in, Encoding enc, bool bom, std::string out, auto info)
+    {
+        INFO(info);
+        {
+            EMFile f;
+            f.setEncoding(enc);
+            f.setBOM(bom);
+            wxArrayString as;
+            as.Add(in);
+            f.saveAs(as, fn);
+        }
+
+        CompareFile(out);
+        wxRemoveFile(fn);
+    };
+
+    DoCheck("", Encoding::ANSI, false, "", "ANSI (empty file)");
+    DoCheck("qwerty1234!@#$", Encoding::ANSI, false, "qwerty1234!@#$", "ANSI (ASCII only)");
+    DoCheck("\xF4\xFB\xE2\xE0", Encoding::ANSI, false, "\xF4\xFB\xE2\xE0", "ANSI");
+    DoCheck("", Encoding::UTF8, false, "", "UTF8 (empty file)");
+    DoCheck("qwerty1234!@#$", Encoding::UTF8, false, "qwerty1234!@#$", "UTF8 (ASCII only)");
+    DoCheck("\xF4\xFB\xE2\xE0", Encoding::UTF8, false, "\xd1\x84\xd1\x8b\xd0\xb2\xd0\xb0", "UTF8");
+    DoCheck("", Encoding::UTF8, true, "\xEF\xBB\xBF", "UTF8-BOM (empty file)");
+    DoCheck("qwerty1234!@#$", Encoding::UTF8, true, "\xEF\xBB\xBFqwerty1234!@#$", "UTF8-BOM (ASCII only)");
+    DoCheck("\xF4\xFB\xE2\xE0", Encoding::UTF8, true, "\xEF\xBB\xBF\xd1\x84\xd1\x8b\xd0\xb2\xd0\xb0", "UTF8-BOM");
 }

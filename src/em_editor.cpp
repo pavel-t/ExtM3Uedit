@@ -94,6 +94,18 @@ void EMEditor::saveFileAs(wxString name)
     notify(EMUpdateMode::Info);
 }
 
+void EMEditor::setFileEncoding(Encoding e)
+{
+    m_file.setEncoding(e);
+    notify(EMUpdateMode::Info);
+}
+
+void EMEditor::setFileBOM(bool bom)
+{
+    m_file.setBOM(bom);
+    notify(EMUpdateMode::Info);
+}
+
 void EMEditor::addEntry(Index i, wxString url)
 {
     std::vector<std::unique_ptr<EMLine>> l;

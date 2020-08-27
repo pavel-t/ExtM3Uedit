@@ -13,6 +13,9 @@
 #include <wx/string.h>
 #include <wx/arrstr.h>
 #include <wx/textfile.h>
+#include <memory>
+
+enum class Encoding : unsigned char { Unknown, UTF8, ANSI };
 
 class EMFile
 {
@@ -23,9 +26,17 @@ public:
     void close() { m_file.Close(); }
     bool isOpened() const { return m_file.IsOpened(); }
     wxString getName() const { return m_file.GetName(); }
+    Encoding getEncoding() const noexcept { return m_encoding; }
+    void setEncoding(Encoding e) noexcept;
+    bool getBOM() const noexcept { return m_bom; }
+    void setBOM(bool bom) noexcept { m_bom = bom; }
 
 private:
     wxTextFile m_file;
+    Encoding m_encoding = Encoding::UTF8;
+    bool m_bom = false;
+    std::unique_ptr<wxMBConv> m_conv;
+    void createConv();
 };
 
 #endif // EM_FILE_H
