@@ -7,7 +7,7 @@
  * License:   GNU General Public License v3.0
  **************************************************************/
 
-#include "catch.hpp"
+#include "../dep/catch.hpp"
 #include "../src/em_data.h"
 #include <wx/log.h>
 #include <typeinfo>

@@ -204,9 +204,6 @@
 			<Option target="Testing" />
 			<Option target="Release" />
 		</Unit>
-		<Unit filename="test/catch.hpp">
-			<Option target="UnitTests" />
-		</Unit>
 		<Unit filename="test/tests_data.cpp">
 			<Option target="UnitTests" />
 		</Unit>
