@@ -114,9 +114,9 @@
 			<Add option="-pedantic" />
 			<Add option="-Wextra" />
 			<Add option="-Wall" />
+			<Add option="-std=c++20" />
 			<Add option="-pipe" />
 			<Add option="-mthreads" />
-			<Add option="-std=c++17" />
 			<Add option="-D__GNUWIN32__" />
 			<Add option="-D__WXMSW__" />
 			<Add option="-DwxUSE_UNICODE" />
@@ -217,10 +217,6 @@
 			<Option target="UnitTests" />
 		</Unit>
 		<Extensions>
-			<code_completion />
-			<envvars />
-			<debugger />
-			<fortran_project />
 			<lib_finder disable_auto="1" />
 			<wxsmith version="1">
 				<gui name="wxWidgets" src="src/ExtM3UeditApp.cpp" main="ExtM3UeditFrame" init_handlers="necessary" language="CPP" />
