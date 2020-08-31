@@ -66,6 +66,7 @@
 						<creating_code>$(THIS) = new $(CLASS)($(PARENT),$(ID),$(POS),$(SIZE),$(STYLE),$(NAME));</creating_code>
 						<include_file>em__par__view.h</include_file>
 						<local_include>1</local_include>
+						<style>wxPG__TOOLTIPS</style>
 						<size>280,590</size>
 					</object>
 					<flag>wxALL|wxEXPAND|wxFIXED_MINSIZE</flag>

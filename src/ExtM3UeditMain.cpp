@@ -92,7 +92,7 @@ ExtM3UeditFrame::ExtM3UeditFrame(wxWindow* parent,wxWindowID id)
     BoxSizer1->Add(BoxSizer2, 0, wxTOP|wxBOTTOM|wxLEFT|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
     EntryListView = new EMEntryListView(MainPanel, ID_ENTRY_LISTVIEW, wxDefaultPosition, wxDefaultSize, wxLC_REPORT|wxLC_SINGLE_SEL|wxLC_VIRTUAL, wxDefaultValidator, _T("ID_ENTRY_LISTVIEW"));
     BoxSizer1->Add(EntryListView, 1, wxALL|wxEXPAND, 5);
-    ParametersView = new EMParametersView(MainPanel,ID_PARAM_VIEW,wxDefaultPosition,wxSize(280,590),0,_T("ID_PARAM_VIEW"));
+    ParametersView = new EMParametersView(MainPanel,ID_PARAM_VIEW,wxDefaultPosition,wxSize(280,590),wxPG_TOOLTIPS,_T("ID_PARAM_VIEW"));
     BoxSizer1->Add(ParametersView, 0, wxALL|wxEXPAND|wxFIXED_MINSIZE, 5);
     BoxSizer3 = new wxBoxSizer(wxVERTICAL);
     AddAttrButton = new wxBitmapButton(MainPanel, ID_ADDATTR_BITMAPBUTTON, wxArtProvider::GetBitmap(wxART_MAKE_ART_ID_FROM_STR(_T("wxART_PLUS")),wxART_BUTTON), wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW, wxDefaultValidator, _T("ID_ADDATTR_BITMAPBUTTON"));
