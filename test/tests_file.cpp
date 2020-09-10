@@ -13,11 +13,29 @@
 
 static wxString fn = "test.txt";
 
+static void WriteFile(const std::string& d)
+{
+    wxFile rf;
+    REQUIRE(rf.Create(fn, true));
+    REQUIRE(rf.Write(d.data(), d.size()) == d.size());
+}
+
+static void CompareFile(std::string d)
+{
+    wxFile f;
+    REQUIRE(f.Open(fn));
+    size_t s = d.size();
+    CHECK(f.Length() == s);
+    std::string buf(s, '\0');
+    CHECK(f.Read(buf.data(), s) == (int)s);
+    CHECK(d == buf);
+}
+
 TEST_CASE("Files reading and writing", "[file]")
 {
     auto CheckFile = [](const wxArrayString& lines)
     {
-        wxString fd = wxJoin(lines, '\n');
+        std::string fd = wxJoin(lines, '\n').ToStdString();
         wxArrayString lines_read;
         EMFile f;
         auto DoCheck = [&](auto m)
@@ -36,11 +54,7 @@ TEST_CASE("Files reading and writing", "[file]")
         INFO(fd);
         CHECK_FALSE(f.isOpened());
 
-        {
-            wxFile rf;
-            REQUIRE(rf.Create(fn, true));
-            REQUIRE(rf.Write(fd));
-        }
+        WriteFile(fd);
         DoCheck("First read");
 
         f.save(lines_read);
@@ -52,15 +66,7 @@ TEST_CASE("Files reading and writing", "[file]")
         CHECK(f.getName() == fn);
         DoCheck("After save as");
 
-        {
-            wxFile rf(fn);
-            wxString tmp;
-            rf.ReadAll(&tmp);
-            tmp.Replace("\r\n", '\n');
-            tmp.Replace('\r', '\n');
-            REQUIRE(tmp == fd);
-        }
-
+        CompareFile(fd);
         wxRemoveFile(fn);
     };
 
@@ -74,28 +80,12 @@ TEST_CASE("Files reading and writing", "[file]")
     CheckFile(d);
 }
 
-static void CompareFile(std::string d)
-{
-    wxFile f;
-    REQUIRE(f.Open(fn));
-    size_t s = d.size();
-    CHECK(f.Length() == s);
-    std::string buf(s, '\0');
-    CHECK(f.Read(buf.data(), s) == (int)s);
-    CHECK(d == buf);
-}
-
 TEST_CASE("Encoding detection", "[file][encoding]")
 {
     auto DoCheck = [](std::string fd, Encoding enc, bool bom, auto info)
     {
         INFO(info);
-        size_t s = fd.size();
-        {
-            wxFile rf;
-            REQUIRE(rf.Create(fn, true));
-            REQUIRE(rf.Write(fd.data(), s) == s);
-        }
+        WriteFile(fd);
 
         {
             EMFile f;
@@ -153,12 +143,7 @@ TEST_CASE("Newline detection", "[file][encoding]")
     auto DoCheck = [](std::string fd, NewlineType newline, auto info)
     {
         INFO(info);
-        size_t s = fd.size();
-        {
-            wxFile rf;
-            REQUIRE(rf.Create(fn, true));
-            REQUIRE(rf.Write(fd.data(), s) == s);
-        }
+        WriteFile(fd);
 
         {
             EMFile f;
