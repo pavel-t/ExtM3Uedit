@@ -8,6 +8,7 @@
  **************************************************************/
 
 #include "em_file.h"
+#include <wx/textfile.h>
 #include <utility>
 #include <algorithm>
 #include <stdexcept>
@@ -57,29 +58,28 @@ static NewlineType DetectNewlineType(const wxTextFile& file) noexcept
 
 wxArrayString EMFile::open(wxString name)
 {
-    if(m_file.IsOpened())
-        m_file.Close(); // workaround
-
+    wxTextFile file(name);
     auto conv = std::make_unique<wxConvAuto>(wxFONTENCODING_SYSTEM);
-    if(!m_file.Open(name, *conv))
+    if(!file.Open(*conv))
         throw std::runtime_error("Could not open file: " + name.ToStdString());
+    m_name = std::move(name);
     m_encoding = DetectEncoding(*conv);
     m_bom = conv->GetBOM() != wxBOM_None;
     //Set encoding manually for empty file
-    auto n = m_file.GetLineCount();
-    if(conv->GetBOM() == wxBOM_Unknown && (!n || (n == 1 && m_file[0].IsEmpty())))
+    auto n = file.GetLineCount();
+    if(conv->GetBOM() == wxBOM_Unknown && (!n || (n == 1 && file[0].IsEmpty())))
     {
         setEncoding(Encoding::UTF8);
         setBOM(false);
     }
     m_conv = std::move(conv);
-    m_newline = DetectNewlineType(m_file);
+    m_newline = DetectNewlineType(file);
 
     wxArrayString data;
     data.reserve(n);
     for(std::size_t i=0; i<n; ++i)
-        data.push_back(std::move(m_file[i]));
-    if(n && m_file.GetLineType(n-1) != wxTextFileType_None)
+        data.push_back(std::move(file[i]));
+    if(n && file.GetLineType(n-1) != wxTextFileType_None)
         data.emplace_back();    // The empty last line
     return data;
 }
@@ -92,7 +92,6 @@ static void AssignToFile(wxTextFile& f, wxArrayString&& d, NewlineType newline)
     else if(newline == NewlineType::CR)
         ft = wxTextFileType_Mac;
 
-    f.Clear();
     size_t fl = 0;
     auto dl = d.size();
     if(dl)
@@ -113,19 +112,18 @@ void EMFile::save(wxArrayString data)
         else
             data.Add(bom);
     }
-    AssignToFile(m_file, std::move(data), m_newline);
+    wxTextFile file(m_name);
+    AssignToFile(file, std::move(data), m_newline);
     if(!m_conv)
         createConv();
-    if(!m_file.Write(wxTextFileType_None, *m_conv))
-        throw std::runtime_error("Could not save file: " + m_file.GetName().ToStdString());
+    if(!file.Write(wxTextFileType_None, *m_conv))
+        throw std::runtime_error("Could not save file: " + m_name.ToStdString());
 }
 
 void EMFile::saveAs(wxArrayString data, wxString name)
 {
-    if(!m_file.Create(name) && !m_file.Open(std::move(name)))
-        throw std::runtime_error("Could not save file as: " + m_file.GetName().ToStdString());
+    m_name = std::move(name);
     save(std::move(data));
-    open(name);
 }
 
 void EMFile::setEncoding(Encoding e) noexcept

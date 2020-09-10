@@ -12,7 +12,6 @@
 
 #include <wx/string.h>
 #include <wx/arrstr.h>
-#include <wx/textfile.h>
 #include <memory>
 
 enum class Encoding : unsigned char { Unknown, UTF8, ANSI };
@@ -24,9 +23,9 @@ public:
     wxArrayString open(wxString name);
     void save(wxArrayString data);
     void saveAs(wxArrayString data, wxString name);
-    void close() { m_file.Close(); }
-    bool isOpened() const { return m_file.IsOpened(); }
-    wxString getName() const { return m_file.GetName(); }
+    void close() noexcept { m_name.clear(); }
+    bool isOpened() const noexcept { return !m_name.IsEmpty(); }
+    wxString getName() const noexcept { return m_name; }
     Encoding getEncoding() const noexcept { return m_encoding; }
     void setEncoding(Encoding e) noexcept;
     bool getBOM() const noexcept { return m_bom; }
@@ -35,11 +34,11 @@ public:
     void setNewlineType(NewlineType newline) noexcept { m_newline = newline; }
 
 private:
-    wxTextFile m_file;
+    wxString m_name;
+    std::unique_ptr<wxMBConv> m_conv;
     Encoding m_encoding = Encoding::UTF8;
     NewlineType m_newline = NewlineType::CRLF;
     bool m_bom = false;
-    std::unique_ptr<wxMBConv> m_conv;
     void createConv();
 };
 
