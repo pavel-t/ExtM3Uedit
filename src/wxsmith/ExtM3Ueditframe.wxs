@@ -175,6 +175,22 @@
 						<handler function="OnEncodingBOMMenuItemSelected" entry="EVT_MENU" />
 						<checkable>1</checkable>
 					</object>
+					<object class="separator" />
+					<object class="wxMenuItem" name="idMenuEncodingCRLF" variable="EncodingCRLFMenuItem" member="yes">
+						<label>CR LF</label>
+						<handler function="OnEncodingCRLFMenuItemSelected" entry="EVT_MENU" />
+						<radio>1</radio>
+					</object>
+					<object class="wxMenuItem" name="idMenuEncodingLF" variable="EncodingLFMenuItem" member="yes">
+						<label>LF</label>
+						<handler function="OnEncodingLFMenuItemSelected" entry="EVT_MENU" />
+						<radio>1</radio>
+					</object>
+					<object class="wxMenuItem" name="idMenuEncodingCR" variable="EncodingCRMenuItem" member="yes">
+						<label>CR</label>
+						<handler function="OnEncodingCRMenuItemSelected" entry="EVT_MENU" />
+						<radio>1</radio>
+					</object>
 				</object>
 				<object class="wxMenuItem" name="idMenuQuit" variable="QuitMenuItem" member="no">
 					<label>Quit</label>

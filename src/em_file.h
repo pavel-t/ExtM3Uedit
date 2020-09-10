@@ -16,6 +16,7 @@
 #include <memory>
 
 enum class Encoding : unsigned char { Unknown, UTF8, ANSI };
+enum class NewlineType : unsigned char { CRLF, LF, CR };
 
 class EMFile
 {
@@ -30,10 +31,13 @@ public:
     void setEncoding(Encoding e) noexcept;
     bool getBOM() const noexcept { return m_bom; }
     void setBOM(bool bom) noexcept { m_bom = bom; }
+    NewlineType getNewlineType() const noexcept { return m_newline; }
+    void setNewlineType(NewlineType newline) noexcept { m_newline = newline; }
 
 private:
     wxTextFile m_file;
     Encoding m_encoding = Encoding::UTF8;
+    NewlineType m_newline = NewlineType::CRLF;
     bool m_bom = false;
     std::unique_ptr<wxMBConv> m_conv;
     void createConv();

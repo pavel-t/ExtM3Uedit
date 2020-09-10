@@ -54,6 +54,9 @@ private:
     void OnEncodingUTF8MenuItemSelected(wxCommandEvent& event);
     void OnEncodingANSIMenuItemSelected(wxCommandEvent& event);
     void OnEncodingBOMMenuItemSelected(wxCommandEvent& event);
+    void OnEncodingCRLFMenuItemSelected(wxCommandEvent& event);
+    void OnEncodingLFMenuItemSelected(wxCommandEvent& event);
+    void OnEncodingCRMenuItemSelected(wxCommandEvent& event);
     //*)
 
     //(*Identifiers(ExtM3UeditFrame)
@@ -76,6 +79,9 @@ private:
     static const long idMenuEncodingANSI;
     static const long idMenuEncodingUnknown;
     static const long idMenuEncodingBOM;
+    static const long idMenuEncodingCRLF;
+    static const long idMenuEncodingLF;
+    static const long idMenuEncodingCR;
     static const long idMenuEncoding;
     static const long idMenuQuit;
     static const long idMenuNormalize;
@@ -97,6 +103,9 @@ private:
     wxMenu* EncodingMenu;
     wxMenuItem* EncodingANSIMenuItem;
     wxMenuItem* EncodingBOMMenuItem;
+    wxMenuItem* EncodingCRLFMenuItem;
+    wxMenuItem* EncodingCRMenuItem;
+    wxMenuItem* EncodingLFMenuItem;
     wxMenuItem* EncodingUTF8MenuItem;
     wxMenuItem* EncodingUnknownMenuItem;
     wxPanel* MainPanel;

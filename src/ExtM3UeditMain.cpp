@@ -41,6 +41,9 @@ const long ExtM3UeditFrame::idMenuEncodingUTF8 = wxNewId();
 const long ExtM3UeditFrame::idMenuEncodingANSI = wxNewId();
 const long ExtM3UeditFrame::idMenuEncodingUnknown = wxNewId();
 const long ExtM3UeditFrame::idMenuEncodingBOM = wxNewId();
+const long ExtM3UeditFrame::idMenuEncodingCRLF = wxNewId();
+const long ExtM3UeditFrame::idMenuEncodingLF = wxNewId();
+const long ExtM3UeditFrame::idMenuEncodingCR = wxNewId();
 const long ExtM3UeditFrame::idMenuEncoding = wxNewId();
 const long ExtM3UeditFrame::idMenuQuit = wxNewId();
 const long ExtM3UeditFrame::idMenuNormalize = wxNewId();
@@ -136,6 +139,13 @@ ExtM3UeditFrame::ExtM3UeditFrame(wxWindow* parent,wxWindowID id)
     EncodingBOMMenuItem = new wxMenuItem(EncodingMenu, idMenuEncodingBOM, _("BOM"), wxEmptyString, wxITEM_CHECK);
     EncodingMenu->Append(EncodingBOMMenuItem);
     EncodingBOMMenuItem->Check(true);
+    EncodingMenu->AppendSeparator();
+    EncodingCRLFMenuItem = new wxMenuItem(EncodingMenu, idMenuEncodingCRLF, _("CR LF"), wxEmptyString, wxITEM_RADIO);
+    EncodingMenu->Append(EncodingCRLFMenuItem);
+    EncodingLFMenuItem = new wxMenuItem(EncodingMenu, idMenuEncodingLF, _("LF"), wxEmptyString, wxITEM_RADIO);
+    EncodingMenu->Append(EncodingLFMenuItem);
+    EncodingCRMenuItem = new wxMenuItem(EncodingMenu, idMenuEncodingCR, _("CR"), wxEmptyString, wxITEM_RADIO);
+    EncodingMenu->Append(EncodingCRMenuItem);
     FileMenu->Append(idMenuEncoding, _("Encoding"), EncodingMenu, wxEmptyString);
     QuitMenuItem = new wxMenuItem(FileMenu, idMenuQuit, _("Quit\tAlt+F4"), _("Quit the application"), wxITEM_NORMAL);
     QuitMenuItem->SetBitmap(wxArtProvider::GetBitmap(wxART_MAKE_ART_ID_FROM_STR(_T("wxART_QUIT")),wxART_MENU));
@@ -174,6 +184,9 @@ ExtM3UeditFrame::ExtM3UeditFrame(wxWindow* parent,wxWindowID id)
     Connect(idMenuEncodingUTF8,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&ExtM3UeditFrame::OnEncodingUTF8MenuItemSelected);
     Connect(idMenuEncodingANSI,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&ExtM3UeditFrame::OnEncodingANSIMenuItemSelected);
     Connect(idMenuEncodingBOM,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&ExtM3UeditFrame::OnEncodingBOMMenuItemSelected);
+    Connect(idMenuEncodingCRLF,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&ExtM3UeditFrame::OnEncodingCRLFMenuItemSelected);
+    Connect(idMenuEncodingLF,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&ExtM3UeditFrame::OnEncodingLFMenuItemSelected);
+    Connect(idMenuEncodingCR,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&ExtM3UeditFrame::OnEncodingCRMenuItemSelected);
     Connect(idMenuQuit,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&ExtM3UeditFrame::OnQuit);
     Connect(idMenuNormalize,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&ExtM3UeditFrame::OnNormalizeMenuItemSelected);
     Connect(idMenuAbout,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&ExtM3UeditFrame::OnAbout);
@@ -221,6 +234,17 @@ void ExtM3UeditFrame::notify(EMUpdateMode t, Index /*begin*/, Index /*end*/)
             EncodingMenu->Remove(EncodingUnknownMenuItem);
         EncodingBOMMenuItem->Enable(enc != Encoding::ANSI);
         EncodingBOMMenuItem->Check(m_editor.getFileBOM());
+        switch(m_editor.getFileNewlineType())
+        {
+        case NewlineType::CRLF:
+            EncodingCRLFMenuItem->Check();
+            break;
+        case NewlineType::LF:
+            EncodingLFMenuItem->Check();
+            break;
+        case NewlineType::CR:
+            EncodingCRMenuItem->Check();
+        }
     }
 }
 
@@ -358,4 +382,19 @@ void ExtM3UeditFrame::OnEncodingANSIMenuItemSelected(wxCommandEvent& /*event*/)
 void ExtM3UeditFrame::OnEncodingBOMMenuItemSelected(wxCommandEvent& /*event*/)
 {
     m_editor.setFileBOM(EncodingBOMMenuItem->IsChecked());
+}
+
+void ExtM3UeditFrame::OnEncodingCRLFMenuItemSelected(wxCommandEvent& /*event*/)
+{
+    m_editor.setFileNewlineType(NewlineType::CRLF);
+}
+
+void ExtM3UeditFrame::OnEncodingLFMenuItemSelected(wxCommandEvent& /*event*/)
+{
+    m_editor.setFileNewlineType(NewlineType::LF);
+}
+
+void ExtM3UeditFrame::OnEncodingCRMenuItemSelected(wxCommandEvent& /*event*/)
+{
+    m_editor.setFileNewlineType(NewlineType::CR);
 }

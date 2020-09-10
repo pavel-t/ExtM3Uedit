@@ -25,6 +25,36 @@ static Encoding DetectEncoding(const wxConvAuto& conv) noexcept
     }
 }
 
+static NewlineType DetectNewlineType(const wxTextFile& file) noexcept
+{
+    size_t n_le[3] {};
+    const auto n = std::min(file.GetLineCount(), 100u);
+    for(size_t i=0; i<n; ++i)
+    {
+        switch(file.GetLineType(i))
+        {
+        case wxTextFileType_Dos:
+        case wxTextFileType_Os2:
+            ++n_le[0];
+            break;
+        case wxTextFileType_Unix:
+            ++n_le[1];
+            break;
+        case wxTextFileType_Mac:
+            ++n_le[2];
+            break;
+        default:
+            break;
+        }
+    }
+    if(n_le[2] > n_le[1] && n_le[2] > n_le[0])
+        return NewlineType::CR;
+    else if(n_le[1] > n_le[0])
+        return NewlineType::LF;
+    else
+        return NewlineType::CRLF;
+}
+
 wxArrayString EMFile::open(wxString name)
 {
     if(m_file.IsOpened())
@@ -43,6 +73,7 @@ wxArrayString EMFile::open(wxString name)
         setBOM(false);
     }
     m_conv = std::move(conv);
+    m_newline = DetectNewlineType(m_file);
 
     wxArrayString data;
     data.reserve(n);
@@ -53,18 +84,21 @@ wxArrayString EMFile::open(wxString name)
     return data;
 }
 
-static void AssignToFile(wxTextFile& f, wxArrayString&& d)
+static void AssignToFile(wxTextFile& f, wxArrayString&& d, NewlineType newline)
 {
-    auto fl = f.GetLineCount();
+    wxTextFileType ft = wxTextFileType_Dos;
+    if(newline == NewlineType::LF)
+        ft = wxTextFileType_Unix;
+    else if(newline == NewlineType::CR)
+        ft = wxTextFileType_Mac;
+
+    f.Clear();
+    size_t fl = 0;
     auto dl = d.size();
     if(dl)
         --dl;   // The last line needs special handling
-    while(fl > dl)
-        f.RemoveLine(--fl);
-    for(std::size_t i=0; i<fl; ++i)
-        f[i] = std::move(d[i]);
     while(fl < dl)
-        f.AddLine(std::move(d[fl++]));
+        f.AddLine(std::move(d[fl++]), ft);
     if(!d.empty() && !d.back().empty())
         f.AddLine(d.back(), wxTextFileType_None);
 }
@@ -79,7 +113,7 @@ void EMFile::save(wxArrayString data)
         else
             data.Add(bom);
     }
-    AssignToFile(m_file, std::move(data));
+    AssignToFile(m_file, std::move(data), m_newline);
     if(!m_conv)
         createConv();
     if(!m_file.Write(wxTextFileType_None, *m_conv))

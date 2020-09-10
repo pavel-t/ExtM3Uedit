@@ -64,6 +64,8 @@ public:
     void setFileEncoding(Encoding e);
     bool getFileBOM() const noexcept { return m_file.getBOM(); }
     void setFileBOM(bool bom);
+    NewlineType getFileNewlineType() const noexcept { return m_file.getNewlineType(); }
+    void setFileNewlineType(NewlineType newline);
 
     void addEntry(Index i, wxString url);
     void removeEntry(Index i);

@@ -106,6 +106,12 @@ void EMEditor::setFileBOM(bool bom)
     notify(EMUpdateMode::Info);
 }
 
+void EMEditor::setFileNewlineType(NewlineType newline)
+{
+    m_file.setNewlineType(newline);
+    notify(EMUpdateMode::Info);
+}
+
 void EMEditor::addEntry(Index i, wxString url)
 {
     std::vector<std::unique_ptr<EMLine>> l;

@@ -147,3 +147,59 @@ TEST_CASE("Encoding selection", "[file][encoding]")
     DoCheck("qwerty1234!@#$", Encoding::UTF8, true, "\xEF\xBB\xBFqwerty1234!@#$", "UTF8-BOM (ASCII only)");
     DoCheck("\xF4\xFB\xE2\xE0", Encoding::UTF8, true, "\xEF\xBB\xBF\xd1\x84\xd1\x8b\xd0\xb2\xd0\xb0", "UTF8-BOM");
 }
+
+TEST_CASE("Newline detection", "[file][encoding]")
+{
+    auto DoCheck = [](std::string fd, NewlineType newline, auto info)
+    {
+        INFO(info);
+        size_t s = fd.size();
+        {
+            wxFile rf;
+            REQUIRE(rf.Create(fn, true));
+            REQUIRE(rf.Write(fd.data(), s) == s);
+        }
+
+        {
+            EMFile f;
+            auto as = f.open(fn);
+            REQUIRE(f.isOpened());
+            CHECK(f.getNewlineType() == newline);
+            f.save(as);
+        }
+
+        CompareFile(fd);
+        wxRemoveFile(fn);
+    };
+
+    DoCheck("", NewlineType::CRLF, "Empty file -> CRLF");
+    DoCheck("qwerty 12345 !@#$%^&*", NewlineType::CRLF, "No newlines -> CRLF");
+    DoCheck("qwerty\r\n", NewlineType::CRLF, "One line, CRLF");
+    DoCheck("qwerty\n", NewlineType::LF, "One line, LF");
+    DoCheck("qwerty\r", NewlineType::CR, "One line, CR");
+
+    auto CheckNewlineType = [=](auto& lines, auto eol, NewlineType newline, std::string info)
+    {
+        std::string fd = lines[0];
+        for(size_t i=1; i<lines.size(); ++i)
+            fd += (eol + lines[i]);
+        DoCheck(fd, newline, info+", no empty last line");
+        DoCheck(fd+eol, newline, info+", empty last line");
+    };
+    auto CheckNewlineTypes = [=](auto& lines, std::string info)
+    {
+        CheckNewlineType(lines, "\r\n", NewlineType::CRLF, info+", CRLF");
+        CheckNewlineType(lines, '\n', NewlineType::LF, info+", LF");
+        CheckNewlineType(lines, '\r', NewlineType::CR, info+", CR");
+    };
+    std::vector<std::string> lines {"qwerty", "asdf"};
+    CheckNewlineTypes(lines, "2 lines");
+    lines.emplace_back("zxcvbnm");
+    CheckNewlineTypes(lines, "3 lines");
+    lines.resize(10, "1234567890");
+    CheckNewlineTypes(lines, "10 lines");
+    lines.resize(100, "7894561230");
+    CheckNewlineTypes(lines, "100 lines");
+    lines.resize(1000, "qazxswedcvfrtgb");
+    CheckNewlineTypes(lines, "1000 lines");
+}
